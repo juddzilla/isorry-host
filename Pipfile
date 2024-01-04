@@ -9,6 +9,7 @@ django-environ = "*"
 psycopg2 = "*"
 django-oauth-toolkit = "*"
 djangorestframework = "*"
+django-allauth = "*"
 
 [dev-packages]
 
