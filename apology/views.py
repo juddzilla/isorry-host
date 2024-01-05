@@ -8,10 +8,12 @@ from rest_framework import status
 from apology.models import Apology
 from .serializers import ApologySerializer
 from rest_framework import permissions
+import uuid
+from .ai import AI
 
 class ApologyListApiView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     # 1. List all
     def get(self, request, *args, **kwargs):
@@ -31,12 +33,14 @@ class ApologyListApiView(APIView):
             'reason': request.data.get('reason'), 
             'type': request.data.get('type'), 
             'parameters': request.data.get('parameters'), 
-            'user': request.user.id
+            'user': request.user.id,
+            'uuid': uuid.uuid4()
         }
+        generated = AI()
         serializer = ApologySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(generated, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

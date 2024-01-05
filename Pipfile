@@ -10,6 +10,8 @@ psycopg2 = "*"
 django-oauth-toolkit = "*"
 djangorestframework = "*"
 django-allauth = "*"
+django-cors-headers = "*"
+openai = "*"
 
 [dev-packages]
 
