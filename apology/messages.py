@@ -12,24 +12,29 @@ def Messages(reason, type, parameters):
 
     msgs = [
         {"role": "system", "content": "You are a writer who specializes in writing apologies"},
+        {"role": "system", "content": f"You write for people who feel {parameters['yourFeeling']} about what they've done."},
+        {"role": "system", "content": f"The recipients of your writing feels {parameters['theirFeelings']} about what has happened."},
+        {"role": "user", "content": f'Th reason I am apologizing is: {reason}.'},
+        {"role": "user", "content": f'The amount of responsibility I am willing to take is: {type}.'}
     ]
-
-    user_reason = f"Compose an apology for me. What I'm apologizing for: {reason}."
-    user_responsibility = f'The amount of responsibility I am willing to take is: {type}.'
-
-    msgs.append({"role": "user", "content": user_reason})
-    msgs.append({"role": "user", "content": user_responsibility})
-
+    print(parameters)
+    print(100)
+    print(type)
     if type == 'None':
-        msgs.append({"role": "system", "content": fake_apologies[parameters['noApology']]})
-        {"role": "system", "content": "You are a writer who specializes in writing insincere apologies"},
+        print(200)
+        msgs.append({"role": "system", "content": "You are a writer who specializes in writing insincere apologies for a publication that shows how not to write apologies."})
+        msgs.append({"role": "system", "content": f"In this apology, the writer wants to convey: {fake_apologies[parameters['noApology']]}"}) 
+    elif type == 'Half':
+        msgs.append({"role": "system", "content": f"You write for people who feel only half responsible for their actions and sneakily try to convey it."})
     else:
+        msgs.append({"role": "system", "content": f"You write for people who feel fully responsible for their actions"})
         user_feeling = f'The event makes me feel {parameters['yourFeeling']}.'
         user_remorse = f'I feel {parameters['yourRemorse']} remorse.'
         user_empathy = f'My empathy is {parameters['yourEmpathy']}.'
         user_will_do = f'{parameters['willDo']} is what I will do.'
         user_when_change = f'I will change {parameters['whenChange']}.'
         recipient_feeling = f'The recipient feels {parameters['theirFeelings']}.'
+        # recipient_right_feel = f'The recipient feels {parameters['theirRightFeel']}.'
 
         user_messages = [
             user_feeling,

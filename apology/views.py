@@ -5,7 +5,6 @@ from .models import Apology
 from .serializers import ApologySerializer
 # from rest_framework import permissions
 import uuid
-from .ai import AI
 from .messages import Messages
 from completions.request import Request
         
