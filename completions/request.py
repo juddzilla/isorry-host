@@ -1,5 +1,4 @@
 from openai import OpenAI
-from .models import Completions
 from .serializers import CompletionsSerializer
 from datetime import datetime
 from django.utils.timezone import make_aware
@@ -12,8 +11,7 @@ def Request(apology_id, messages):
     completion_request = client.chat.completions.create(
         model=model,
         messages=messages
-    )
-    print(messages)
+    )    
 
     ai_created_at = make_aware(datetime.fromtimestamp(completion_request.created))
     data = {

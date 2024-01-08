@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from apology import urls as apology_urls
+from completions import urls as completed_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('allauth.socialaccount.urls')),
-    path('apology/', include(apology_urls)),
+    path('apologize/', include(apology_urls)),
+    path('apology/', include(completed_urls)),    
 ]
