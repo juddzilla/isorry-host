@@ -12,6 +12,7 @@ djangorestframework = "*"
 django-allauth = "*"
 django-cors-headers = "*"
 openai = "*"
+requests = "*"
 
 [dev-packages]
 

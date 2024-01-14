@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 from apology import urls as apology_urls
 from completions import urls as completed_urls
+from oauth import urls as oauth_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('allauth.socialaccount.urls')),
     path('apologize/', include(apology_urls)),
-    path('apology/', include(completed_urls)),    
+    path('apology/', include(completed_urls)),
+    path('oauth/google', include(oauth_urls)),
 ]

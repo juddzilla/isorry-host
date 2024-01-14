@@ -18,23 +18,20 @@ def Messages(reason, type, parameters):
         {"role": "user", "content": f'The amount of responsibility I am willing to take is: {type}.'}
     ]
     print(parameters)
-    print(100)
-    print(type)
-    if type == 'None':
-        print(200)
+    
+    if type == 'None':    
         msgs.append({"role": "system", "content": "You are a writer who specializes in writing insincere apologies for a publication that shows how not to write apologies."})
         msgs.append({"role": "system", "content": f"In this apology, the writer wants to convey: {fake_apologies[parameters['noApology']]}"}) 
     elif type == 'Half':
         msgs.append({"role": "system", "content": f"You write for people who feel only half responsible for their actions and sneakily try to convey it."})
     else:
-        msgs.append({"role": "system", "content": f"You write for people who feel fully responsible for their actions"})
+        msgs.append({"role": "system", "content": "You write for people who feel fully responsible for their actions"})
         user_feeling = f'The event makes me feel {parameters['yourFeeling']}.'
         user_remorse = f'I feel {parameters['yourRemorse']} remorse.'
         user_empathy = f'My empathy is {parameters['yourEmpathy']}.'
         user_will_do = f'{parameters['willDo']} is what I will do.'
         user_when_change = f'I will change {parameters['whenChange']}.'
         recipient_feeling = f'The recipient feels {parameters['theirFeelings']}.'
-        # recipient_right_feel = f'The recipient feels {parameters['theirRightFeel']}.'
 
         user_messages = [
             user_feeling,
@@ -45,13 +42,20 @@ def Messages(reason, type, parameters):
             user_when_change,
         ]
 
-        if parameters['willingToChange'] == 'True':
+        if parameters['willingToChange'] == True:
             user_messages.append('I am willing to change')
 
-        if parameters['willChange'] == 'True':
-            user_messages.append('I will change')
+        if parameters['wantToChange'] == True:
+            user_messages.append('I want to change')
         
         for message in user_messages:
             msgs.append({"role": "user", "content": message})
+
+    if parameters['targetAudience'] == 'Child':
+        msgs.append({"role": "system", "content": "A child will be the one receiving the apology."})
+    elif parameters['targetAudience'] == 'Pet':
+        msgs.append({"role": "system", "content": "A pet will be the one receiving the apology."})
+    elif parameters['targetAudience'] != 'Other':
+        msgs.append({"role": "system", "content": f"Your relationship between the user and recipient is: {parameters['targetAudience']}"})            
 
     return msgs

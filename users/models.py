@@ -1,3 +1,7 @@
-from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, UserManager
 
-# Create your models here.
+class User(AbstractBaseUser):
+    objects =  UserManager()
+
+    def __str__(self):
+        return self.username

@@ -5,20 +5,34 @@ from apology.models import Apology
 from .models import Completions
 from .serializers import CompletionsSerializer
 from completions.request import Request
+from django.contrib.sessions.models import Session
 # Create your views here.
+
+def get_user_from_session(cookies):
+  if not cookies:
+    return False
+  session_key = cookies['sessionid']
+  session = Session.objects.get(session_key = session_key)
+  uid = session.get_decoded().get('_auth_user_id')
+  return int(uid)
+
+def get_apology(apology_uuid):
+    try:
+        return Apology.objects.get(uuid=apology_uuid)       
+    except Apology.DoesNotExist:
+        return None
 
 class ApologyDetailApiView(APIView):
     # add permission to check if user is authenticated
     # permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, apology_uuid):
+    def get_object(self, apology_id):
         '''
         Helper method to get the object with given apology_id, and user_id
-        '''
-        
+        '''        
         try:
-            apology = Apology.objects.get(uuid=apology_uuid)            
-            completion = Completions.objects.get(apology_id=apology.id)
+            # apology = Apology.objects.get(uuid=apology_uuid)            
+            completion = Completions.objects.get(apology_id=apology_id)
             return CompletionsSerializer(completion)
         except Apology.DoesNotExist:
             return None
@@ -28,16 +42,38 @@ class ApologyDetailApiView(APIView):
         '''
         Retrieves the Apology with given apology_id
         '''
-        apology_completion = self.get_object(apology_uuid)        
-        if not apology_completion:
+        user = get_user_from_session(request.COOKIES)
+        if user == False:
+            return Response(
+                {"res": "Apology does not exist"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        apology = get_apology(apology_uuid)        
+        if apology == None:
+            return Response(
+                {"res": "Object with apology id does not exist"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        if user != getattr(apology, 'user_id'):
             return Response(
                 {"res": "Object with apology id does not exist"},
                 status=status.HTTP_400_BAD_REQUEST
             )
+              
+        
+        completion = self.get_object(getattr(apology, 'id'))
 
+        if not completion:
+            return Response(
+                {"res": "Object with apology id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         response = {
-            "created_at": apology_completion.data['created_at'],
-            "message": apology_completion.data['message'],
+            "created_at": completion.data['created_at'],
+            "message": completion.data['message'],
         }
                 
         return Response(response, status=status.HTTP_200_OK)

@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import environ
-import os
 
 LOGGING = {
     "version": 1,
@@ -62,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'corsheaders',
     'rest_framework',
+    'users',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -82,11 +82,14 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 CORS_ALLOWED_ORIGINS = [
     "https://isorry.lol",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+CORS_ALLOW_CREDENTIALS=True
 
 ROOT_URLCONF = 'isorrylol.urls'
 
