@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-    ApologyDetailApiView
+    CompletionApiView
 )
 
 urlpatterns = [
-    path('<slug:apology_uuid>/', ApologyDetailApiView.as_view()),
+    path('<slug:apology_uuid>/', CompletionApiView.as_view()),
 ]

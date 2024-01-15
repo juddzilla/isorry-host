@@ -3,48 +3,36 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Apology
 from .serializers import ApologySerializer
-# from rest_framework import permissions
 import uuid
 from .messages import Messages
 from completions.request import Request
-from django.contrib.sessions.models import Session
-from django.contrib.auth.models import User
 
-def get_user_from_session(session_key):
-  session = Session.objects.get(session_key = session_key)
-  uid = session.get_decoded().get('_auth_user_id')
-  return uid
         
 class ApologyListApiView(APIView):
-    # add permission to check if user is authenticated
-    # permission_classes = [permissions.IsAuthenticated]
-    
-    # 1. List all
+        
     def get(self, request, *args, **kwargs):
         '''
         List all the apologies for given requested user
         '''
+        if not request.user.id:
+            return Response(
+                {"res": "User does not have any apologies"},
+                status=status.HTTP_404_NOT_FOUND
+            )
         apologies = Apology.objects.filter(user = request.user.id)
         serializer = ApologySerializer(apologies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # 2. Create
     def post(self, request, *args, **kwargs):
         '''
         Create the Apology with given apology data
         '''        
-
-        user = get_user_from_session(request.COOKIES["sessionid"])
-        print(user)
-        print(request.COOKIES)
-        print(request.user.is_authenticated)
-        apology_uuid = uuid.uuid4()
         data = {
             'reason': request.data.get('reason'), 
             'type': request.data.get('type'), 
             'parameters': request.data.get('parameters'), 
-            'user': user,
-            'uuid': apology_uuid
+            'user': request.user.id,
+            'uuid': uuid.uuid4()
         }
         serializer = ApologySerializer(data=data)
         
