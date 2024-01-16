@@ -1,32 +1,39 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import permissions, status
 from .models import Apology
 from .serializers import ApologySerializer
 import uuid
 from .messages import Messages
 from completions.request import Request
+from datetime import datetime
+        
+class ApologiesView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-        
-class ApologyListApiView(APIView):
-        
     def get(self, request, *args, **kwargs):
         '''
         List all the apologies for given requested user
         '''
-        if not request.user.id:
-            return Response(
-                {"res": "User does not have any apologies"},
-                status=status.HTTP_404_NOT_FOUND
-            )
-        apologies = Apology.objects.filter(user = request.user.id)
-        serializer = ApologySerializer(apologies, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        def apply(a):                
+            return {                    
+                'created_at': a.created_at.strftime("%A %B %d, %Y %l:%M %p"),
+                'reason': a.reason[:80],
+                'type': a.type,
+                'uuid': str(a.uuid),
+            }
 
+        apologies = Apology.objects.filter(user=request.user.id)
+        mapped = map(apply, apologies)
+        return Response(list(mapped), status=status.HTTP_200_OK)
+
+
+class ApologyView(APIView):
     def post(self, request, *args, **kwargs):
         '''
         Create the Apology with given apology data
         '''        
+        print(request.user.id)
         data = {
             'reason': request.data.get('reason'), 
             'type': request.data.get('type'), 
@@ -44,7 +51,10 @@ class ApologyListApiView(APIView):
             
             if hasattr(completion, 'id'):
                 return Response({
+                    "created_at": completion.created_at.strftime("%A %B %d, %Y %l:%M %p"),
                     "message": completion.message,
+                    "model": completion.model,
+                    "reason": apology.reason,
                     "uuid": apology.uuid,
                 }, status=status.HTTP_201_CREATED)        
 

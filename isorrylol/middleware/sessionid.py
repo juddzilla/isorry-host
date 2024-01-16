@@ -9,7 +9,7 @@ class SessionMiddleware:
         # Get the sessionid from the request cookies
         # sessionid = request.COOKIES.get('sessionid')
         sessionid = request.COOKIES.get('sessionid')            
-        print(400)
+        print(request.COOKIES)
         # Check if sessionid exists
         if sessionid:
             try:

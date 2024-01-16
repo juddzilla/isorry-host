@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import (ApologyListApiView)
+from .views import (ApologyView, ApologiesView)
 
 urlpatterns = [
-    path('', ApologyListApiView.as_view()),
+    path('', ApologyView.as_view()),
+    path('list', ApologiesView.as_view()),
 ]

@@ -19,6 +19,7 @@ from django.urls import include, path
 from apology import urls as apology_urls
 from completions import urls as completed_urls
 from oauth import urls as oauth_urls
+from users import urls as user_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('apologize/', include(apology_urls)),
     path('apology/', include(completed_urls)),
     path('oauth/google', include(oauth_urls)),
+    path('logout', include(user_urls)),
 ]
