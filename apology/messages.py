@@ -17,7 +17,6 @@ def Messages(reason, type, parameters):
         {"role": "user", "content": f'Th reason I am apologizing is: {reason}.'},
         {"role": "user", "content": f'The amount of responsibility I am willing to take is: {type}.'}
     ]
-    print(parameters)
     
     if type == 'None':    
         msgs.append({"role": "system", "content": "You are a writer who specializes in writing insincere apologies for a publication that shows how not to write apologies."})

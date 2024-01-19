@@ -27,6 +27,6 @@ urlpatterns = [
     path('accounts/', include('allauth.socialaccount.urls')),
     path('apologize/', include(apology_urls)),
     path('apology/', include(completed_urls)),
-    path('oauth/google', include(oauth_urls)),
-    path('logout', include(user_urls)),
+    path('oauth/', include(oauth_urls)),
+    path('u/', include(user_urls)),
 ]

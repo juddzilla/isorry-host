@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import (GoogleOAuthView)
+from .views import (GithubOAuthView, GoogleOAuthView)
 
 urlpatterns = [
-    path('', GoogleOAuthView.as_view()),
+    path('google', GoogleOAuthView.as_view()),
+    path('github', GithubOAuthView.as_view()),
 ]
