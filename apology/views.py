@@ -2,7 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from .models import Apology
-from .serializers import ApologySerializer
+from .serializers import ApologySerializer, ApologiesSerializer
+from completions.serializers import CompletionPublicSerializer
 import uuid
 from .messages import Messages
 from completions.request import Request
@@ -15,17 +16,10 @@ class ApologiesView(APIView):
         '''
         List all the apologies for given requested user
         '''
-        def apply(a):                
-            return {                    
-                'created_at': a.created_at.strftime("%A %B %d, %Y %l:%M %p"),
-                'reason': a.reason[:80],
-                'type': a.type,
-                'uuid': str(a.uuid),
-            }
-
-        apologies = Apology.objects.filter(user=request.user.id)
-        mapped = map(apply, apologies)
-        return Response(list(mapped), status=status.HTTP_200_OK)
+  
+        apologies = Apology.objects.filter(user=request.user.id)  
+        serialized = ApologiesSerializer(apologies, many=True)    
+        return Response(serialized.data, status=status.HTTP_200_OK)
 
 
 class ApologyView(APIView):
@@ -33,7 +27,6 @@ class ApologyView(APIView):
         '''
         Create the Apology with given apology data
         '''        
-        print(request.user.id)
         data = {
             'reason': request.data.get('reason'), 
             'type': request.data.get('type'), 
@@ -47,15 +40,16 @@ class ApologyView(APIView):
             apology = serializer.save()            
             
             messages = Messages(request.data.get('reason'), request.data.get('type'), request.data.get('parameters'))
-            completion = Request(apology.id, messages)
+            completion = Request(messages)
             
-            if hasattr(completion, 'id'):
+            apology_serialized = ApologiesSerializer(apology)
+            completion_serialized = CompletionPublicSerializer(apology.completion)
+            if completion is not None:
+                apology.completion = completion
+                apology.save()
                 return Response({
-                    "created_at": completion.created_at.strftime("%A %B %d, %Y %l:%M %p"),
-                    "message": completion.message,
-                    "model": completion.model,
-                    "reason": apology.reason,
-                    "uuid": apology.uuid,
+                   **apology_serialized.data,
+                   **completion_serialized.data
                 }, status=status.HTTP_201_CREATED)        
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

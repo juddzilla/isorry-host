@@ -4,7 +4,7 @@ from rest_framework import permissions, status
 
 class UserLogoutView(APIView):    
     def get(self, request, *args, **kwargs):        
-        response = Response({ "success": 100 }, status=status.HTTP_200_OK)
+        response = Response({ "logout": 100 }, status=status.HTTP_200_OK)
         response.delete_cookie('sessionid')
         return response
 

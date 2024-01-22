@@ -6,7 +6,7 @@ from django.utils.timezone import make_aware
 client = OpenAI()
 
 
-def Request(apology_id, messages):
+def Request(messages):
     model = 'gpt-3.5-turbo'
     completion_request = client.chat.completions.create(
         model=model,
@@ -17,7 +17,6 @@ def Request(apology_id, messages):
     data = {
         "ai_created_at": ai_created_at,
         "ai_id": completion_request.id,
-        "apology": apology_id,
         "completion_tokens": completion_request.usage.completion_tokens,        
         "message": completion_request.choices[0].message.content,
         "messages": messages,            
@@ -30,4 +29,4 @@ def Request(apology_id, messages):
         completion = serializer.save()
         return completion
     else:
-        return serializer.errors
+        return None
