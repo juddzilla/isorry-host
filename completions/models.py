@@ -9,6 +9,3 @@ class Completions(models.Model):
     messages = models.JSONField()
     model = models.TextField()
     prompt_tokens = models.IntegerField()    
-
-    # def __str__(self):
-    #     return self.message

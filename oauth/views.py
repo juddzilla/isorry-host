@@ -23,8 +23,9 @@ class GoogleOAuthView(APIView):
     def get(self, request, *args, **kwargs):        
         token = request.GET.get('token')
         url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json'
-        req = requests.get(url, headers = {'Authorization': f'Bearer {token}'})
-        # req.json() = {'id': '100', 'email': 'email@email.com', 'verified_email': True, 'name': 'First Last', 'given_name': 'First', 'family_name': 'Last', 'picture': 'https://lh3.googleusercontent.com/a/asdfsdfaf', 'locale': 'en'}
+        req = requests.get(
+            url, 
+            headers = {'Authorization': f'Bearer {token}'})
         req_user = req.json()
         username = f'google:{req_user['id']}'        
         user = find_user(username=username)
@@ -38,13 +39,7 @@ class GoogleOAuthView(APIView):
 
 
 class GithubOAuthView(APIView):
-    def get_token(self, code):                
-        # data = {
-        #     'client_id': os.environ["GITHUB_CLIENT_ID"],
-        #     'client_secret':os.environ["GITHUB_SECRET"], 
-        #     'code': code,
-        #     'scope': 'read:user'
-        # }    
+    def get_token(self, code):        
         req = requests.post(
             'https://github.com/login/oauth/access_token',
             data={
@@ -57,7 +52,9 @@ class GithubOAuthView(APIView):
         return req.json()
     
     def get_user(self, token):        
-        req_user = requests.get('https://api.github.com/user', headers = {'Authorization': f'Bearer {token}'})        
+        req_user = requests.get(
+            'https://api.github.com/user',
+            headers = {'Authorization': f'Bearer {token}'})        
         user = req_user.json()        
         first, *last = user['name'].split()
         return {
@@ -77,5 +74,5 @@ class GithubOAuthView(APIView):
             user = create_user(token_user)
 
         user_login(request, user)
-        return Response({ "success": 100 }, status=status.HTTP_200_OK)
+        return Response({'success': 100 }, status=status.HTTP_200_OK)
 
