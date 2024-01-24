@@ -2,14 +2,14 @@ from openai import OpenAI
 from .serializers import CompletionsSerializer
 from datetime import datetime
 from django.utils.timezone import make_aware
+import os
 
 client = OpenAI()
 
 
-def Request(messages):
-    model = 'gpt-3.5-turbo'
+def Request(messages):    
     completion_request = client.chat.completions.create(
-        model=model,
+        model=os.environ["CHAT_GPT_MODEL"],
         messages=messages
     )    
 
