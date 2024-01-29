@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'apology',
     'completions',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

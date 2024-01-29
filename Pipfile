@@ -13,6 +13,7 @@ django-allauth = "*"
 django-cors-headers = "*"
 openai = "*"
 requests = "*"
+django-extensions = "*"
 
 [dev-packages]
 
