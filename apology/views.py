@@ -16,8 +16,8 @@ class ApologiesView(APIView):
         '''
         List all the apologies for given requested user
         '''
-  
-        apologies = Apology.objects.filter(user=request.user.id)  
+          
+        apologies = Apology.objects.filter(user=request.user.id).exclude(completion__message='Not Possible')
         serialized = ApologiesSerializer(apologies, many=True)    
         return Response(serialized.data, status=status.HTTP_200_OK)
 
