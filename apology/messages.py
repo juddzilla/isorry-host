@@ -12,23 +12,23 @@ def Messages(reason, type, parameters):
 
 
     user_feeling_descriptions = {
-        'Neutral': 'I apologize with a calm and composed demeanor, showing neither strong remorse nor defensiveness,',
-        'Unease': 'I feel slightly uncomfortable while offering an apology, with a sense of awkwardness or uncertainty about your reaction,',
-        'Mischief': 'I apologize with a mischievous tone, perhaps playfully acknowledging a wrongdoing while maintaining a lighthearted attitude,',
-        'Unamused': 'I express remorse without finding the situation amusing, conveying a serious acknowledgment of the wrongdoing,',
-        'Weary': 'I apologize with a tired or fatigued disposition, as if burdened by the weight of the mistake and the need for reconciliation,',
-        'Woozy': 'I offer an apology with a disoriented or confused demeanor, as if struggling to articulate feelings of regret,',
-        'Nothing': 'I apologize without emotional expression, appearing indifferent or detached from the act of apologizing,'
+        'Neutral': 'Make the narrator apologize with a calm and composed demeanor, showing neither strong remorse nor defensiveness,',
+        'Unease': 'Make the narrator feel slightly uncomfortable while offering an apology, with a sense of awkwardness or uncertainty about your reaction,',
+        'Mischief': 'Make the narrator apologize with a mischievous tone, perhaps playfully acknowledging a wrongdoing while maintaining a lighthearted attitude,',
+        'Unamused': 'Make the narrator express remorse without finding the situation amusing, conveying a serious acknowledgment of the wrongdoing,',
+        'Weary': 'Make the narrator apologize with a tired or fatigued disposition, as if burdened by the weight of the mistake and the need for reconciliation,',
+        'Woozy': 'Make the narrator offer an apology with a disoriented or confused demeanor, as if struggling to articulate feelings of regret,',
+        'Nothing': 'Make the narrator apologize without emotional expression, appearing indifferent or detached from the act of apologizing,'
     }
 
     target_feeling_descriptions = {
-        'Neutral': 'The target of the apology responded to the event with a sense of neutrality, neither deeply affected nor entirely indifferent, creating a balanced emotional response.',
-        'Unease': 'The target of the apology experienced a slight discomfort during the event, generating a feeling of unease or mild anxiety about the situation or the sincerity of the apology.',
-        'Mischief': 'The target of the apology felt a sense of amusement or playfulness during the event, as if the wrongdoing was acknowledged with a mischievous tone and a lighthearted approach.',
-        'Unamused': 'The target of the apology reacted with a lack of amusement or amusement during the event, expressing a serious and unamused demeanor, possibly due to the nature of the wrongdoing.',
-        'Weary': 'The target of the apology responded to the event with weariness, as if burdened by the weight of the situation, causing a tired or fatigued emotional response.',
-        'Woozy': 'The target of the apology experienced a sense of disorientation or confusion during the event, creating a woozy or dazed feeling in response to the situation.',
-        'Nothing': 'The target of the apology responded to the event without eliciting much emotional response, feeling indifferent or emotionally detached from the occurrence.'
+        'Neutral': 'Write for a target audience that initially responded to the event with a sense of neutrality, neither deeply affected nor entirely indifferent, creating a balanced emotional response.',
+        'Unease': 'Write for a target audience that initially responded to the event with a slight discomfort, a feeling of unease or mild anxiety about the situation .',
+        'Mischief': 'Write for a target audience that initially responded to the event with a sense of amusement or playfulness during the event, as if the wrongdoing was acknowledged with a mischievous tone and a lighthearted approach.',
+        'Unamused': 'Write for a target audience that initially responded to the event with a lack of amusement, expressing a serious and unamused demeanor, possibly due to the nature of the wrongdoing.',
+        'Weary': 'Write for a target audience that initially responded to the event with weariness, as if burdened by the weight of the situation, causing a tired or fatigued emotional response.',
+        'Woozy': 'Write for a target audience that initially responded to the event with a sense of disorientation or confusion, creating a woozy or dazed feeling in response to the situation.',
+        'Nothing': 'Write for a target audience that initially responded to the event without eliciting much emotional response, feeling indifferent or emotionally detached from the occurrence.'
     }
 
     insincere_instructions = {
@@ -44,29 +44,29 @@ def Messages(reason, type, parameters):
 
 
     type_descriptions = {
-        'None': "I am insincere or disingenuous. I exhibit a tendency to avoid accountability and may only apologize as a formality or to appease others without a genuine acknowledgment of my wrongdoing. My apology might come across as superficial or lacking true remorse, as it doesn't align with a sincere acceptance of responsibility for the consequences of my actions.",
-        'Half': "I am only willing to take half of the responsibility for an action I am apologizing for. I acknowledge my involvement in the situation but fall short of accepting full responsibility, suggesting that I attribute some of the blame to others or external factors. My apology might be perceived as incomplete or lacking in genuine remorse, as it reflects a partial acknowledgment of my role in the matter.",
-        'Full': "I am willing to accept all of the responsibility for an action I am apologizing for. I am accountable, responsible, or sincere. I demonstrate a high level of integrity by fully acknowledging and taking ownership of my actions without deflecting blame onto others. My apology is likely to be perceived as genuine, as it reflects a sincere commitment to recognizing and addressing my role in the situation."
+        'None': "Make the narrator insincere or disingenuous. Exhibit a tendency to avoid accountability and may only apologize as a formality or to appease others without a genuine acknowledgment of wrongdoing. The apology might come across as superficial or lacking true remorse, as it doesn't align with a sincere acceptance of responsibility for the consequences of the actions.",
+        'Half': "Make the narrator only willing to take half of the responsibility for an action they am apologizing for. Have them acknowledge their involvement in the situation but fall short of accepting full responsibility, suggesting that they attribute some of the blame to others or external factors. Anticipate that the apology might be perceived as incomplete or lacking in genuine remorse, as it reflects a partial acknowledgment of their role in the matter.",
+        'Full': "Make the narrator willing to accept all of the responsibility for an action they am apologizing for. They are accountable, responsible, or sincere. They demonstrate a high level of integrity by fully acknowledging and taking ownership of their actions without deflecting blame onto others. Thye apology is likely to be perceived as genuine, as it reflects a sincere commitment to recognizing and addressing their role in the situation."
     }
 
     remorse_descriptions = {
-        'Negligible': "I feel minimal or almost no remorse, suggesting that I may not recognize the gravity of my actions or feel very little emotional impact.",
-        'Limited': "I am experiencing a restrained level of remorse, indicating a recognition of my wrongdoing but with a relatively mild emotional response.",
-        'Partial': "I acknowledge a portion of the wrongdoing with a moderate level of remorse, showing a willingness to accept responsibility for part of my actions.",
-        'Genuine': "I express authentic remorse, demonstrating a sincere acknowledgment of my wrongdoing and a heartfelt desire to make amends.",
-        'Sincere': "I demonstrate a deep and earnest sense of remorse, reflecting a genuine commitment to taking responsibility for my actions and making meaningful reparations.",
-        'Profound': "I am experiencing an intense and profound level of remorse, suggesting a deep emotional impact and a strong desire to rectify the consequences of my actions.",
-        'Overwhelming': "I feel an overpowering and intense remorse, indicating a strong emotional burden and a deep commitment to addressing and learning from my actions."
+        'Negligible': "The narrator feels minimal or almost no remorse, suggesting that they may not recognize the gravity of their actions or feel very little emotional impact.",
+        'Limited': "The narrator is experiencing a restrained level of remorse, indicating a recognition of wrongdoing but with a relatively mild emotional response.",
+        'Partial': "The narrator acknowledges a portion of the wrongdoing with a moderate level of remorse, showing a willingness to accept responsibility for part of their actions.",
+        'Genuine': "The narrator expresses authentic remorse, demonstrating a sincere acknowledgment of wrongdoing and a heartfelt desire to make amends.",
+        'Sincere': "The narrator  demonstrates a deep and earnest sense of remorse, reflecting a genuine commitment to taking responsibility for the actions and making meaningful reparations.",
+        'Profound': "The narrator is experiencing an intense and profound level of remorse, suggesting a deep emotional impact and a strong desire to rectify the consequences of their actions.",
+        'Overwhelming': "The narrator feels an overpowering and intense remorse, indicating a strong emotional burden and a deep commitment to addressing and learning from their actions."
     }
 
     empathy_descriptions = {
-        'Limited': "I have a restricted level of empathy, and I recognize that I may not fully grasp the emotional impact of my actions on others.",
-        'Partial': "I acknowledge a partial level of empathy, understanding to some extent the emotional consequences, but recognizing the need for deeper connection and understanding.",
-        'Basic': "I experience a fundamental level of empathy, showing a basic understanding of the emotional impact on others and a willingness to acknowledge it.",
-        'Moderate': "I express a moderate level of empathy, demonstrating a substantial understanding of the emotional consequences and a sincere desire to address and empathize with those affected.",
-        'High': "I display a high level of empathy, indicating a strong ability to connect emotionally with others and a genuine concern for the feelings and well-being of those affected.",
-        'Deep': "I experience a deep and profound level of empathy, demonstrating a thorough understanding of the emotional impact and a sincere commitment to addressing the needs and feelings of others.",
-        'Exceptional': "I show an exceptional level of empathy, going above and beyond in understanding and responding to the emotional consequences, with a remarkable commitment to supporting and empathizing with those affected."
+        'Limited': "The narrator has a restricted level of empathy, and they recognize that they may not fully grasp the emotional impact of their actions on others.",
+        'Partial': "The narrator acknowledges a partial level of empathy, understanding to some extent the emotional consequences, but recognizing the need for deeper connection and understanding.",
+        'Basic': "The narrator experiences a fundamental level of empathy, showing a basic understanding of the emotional impact on others and a willingness to acknowledge it.",
+        'Moderate': "The narrator express a moderate level of empathy, demonstrating a substantial understanding of the emotional consequences and a sincere desire to address and empathize with those affected.",
+        'High': "The narrator displays a high level of empathy, indicating a strong ability to connect emotionally with others and a genuine concern for the feelings and well-being of those affected.",
+        'Deep': "The narrator experiences a deep and profound level of empathy, demonstrating a thorough understanding of the emotional impact and a sincere commitment to addressing the needs and feelings of others.",
+        'Exceptional': "The narrator shows an exceptional level of empathy, going above and beyond in understanding and responding to the emotional consequences, with a remarkable commitment to supporting and empathizing with those affected."
     }
 
     target_audience_instructions = {
@@ -87,22 +87,24 @@ def Messages(reason, type, parameters):
     }
 
     will_do_statement = {
-        'Everything I Can': "I am committed to taking comprehensive measures and implementing proactive steps to ensure that the circumstances leading to the event are thoroughly addressed and prevented from occurring again in the future. I understand the impact it had and am dedicated to learning from this experience, instituting necessary changes, and fostering an environment where such incidents are actively mitigated.",
-        'My Best': 'I am dedicated to personal growth and understanding the impact of my actions. Moving forward, I will actively work on developing new habits, learning from this experience, and making conscious choices to ensure that such occurrences are avoided in the future',
-        'Positive Thinking and Meditation': 'my heart goes out to you, and I want you to know that you are in my thoughts. '
+        'Everything I Can': "Express that the narrator is committed to taking comprehensive measures and implementing proactive steps to ensure that the circumstances leading to the event are thoroughly addressed and prevented from occurring again in the future. Express that they understand the impact it had and will be dedicated to learning from this experience, instituting necessary changes, and fostering an environment where such incidents are actively mitigated.",
+        'My Best': 'Express that the narrator is dedicated to personal growth and understanding the impact of their actions. Moving forward, they will actively work on developing new habits, learning from this experience, and making conscious choices to ensure that such occurrences are avoided in the future',
+        'Positive Thinking and Meditation': "Express that the narrator's heart goes out to you, and they want them to know that they are in the narrator's thoughts."
     }
 
     when_change_statement = {
-        'Before They Know It': 'I am committed to making swift and meaningful changes. I recognize the urgency and importance of this transformation, and I assure you that the process has already begun. I am dedicated to keeping you informed and involved as I work towards positive and lasting change.',
-        'Immediately': 'I fully understand the immediacy of the situation, and I want to assure you that change is my top priority. I am taking immediate action to address the issues and implement necessary adjustments. Your concerns are heard, and I am actively working towards a positive and prompt resolution.',
-        "When I'm ready": 'I acknowledge the need for change, and I am committed to preparing myself for this transformation. While I may not be ready at this exact moment, I want to assure you that I am actively working towards the necessary steps to ensure a successful and sustainable change. Your patience and understanding are appreciated as I undertake this process.'
+        'Before They Know It': 'Express that the narrator is committed to making swift and meaningful changes. They recognize the urgency and importance of this transformation, and they assure the target audience that the process has already begun. Express that they are dedicated to keeping them informed and involved as the narrator works towards positive and lasting change.',
+        'Immediately': 'Express that the narrator fully understands the immediacy of the situation, and they want to assure you that change is their top priority. Express that the narrator is taking immediate action to address the issues and implement necessary adjustments. The concerns of the target audience are heard, and the narrator is actively working towards a positive and prompt resolution.',
+        "When I'm ready": 'Express that the narrator acknowledges the need for change, and they committed to preparing themselves for this transformation. Acknowledge that while the narrator may not be ready at this exact moment, but they want to assure that they are actively working towards the necessary steps to ensure a successful and sustainable change. Patience and understanding are appreciated as they undertake this process.'
     }
 
     msgs = [
-        {"role": "system", "content": "You are a fiction writer who is writing in the first person on behalf of the user.  The apology you are tasked to write appears near the end of the second act of a book.  To fulfill the needs of your publisher, you are to generate an approximate 1000 word apology based on the input of the user.  The user will tell you what the character is apologizing for, how the character feels about the event, and the amount of accountability or responsibility the character is willing to accept.  If the user mentions the character's level of empathy, remorse, what they are committing to do to change, and when they will change, emphasize and rephrase it."},
+        {'role': 'system', 'content': "Analyze the following user-submitted text, which will be wrapped in '$$$', to determine if it constitutes a valid narrative. Consider the presence of key narrative elements such as a clear beginning, development, and conclusion, characters, a setting, and a plot that progresses. Evaluate the text for coherence and logical flow, indicating the presence of a storyline or personal experience. Exclude content that resembles non-narrative formats like recipes, lists, or unstructured gibberish. If the text does not fulfill this criteria then simply respond with 'Not Possible'"},
+        {"role": "system", "content": "You are a fiction writer who is writing in the first person on behalf of the user.  The apology you are tasked to write appears near the end of the second act of a book.  To fulfill the needs of your publisher, you are to generate an approximate 1000 word apology based on the input of the user.  Make sure to use specific details from the user's input.  The user will tell you what the character is apologizing for, how the character feels about the event, and the amount of accountability or responsibility the character is willing to accept.  If the user mentions the character's level of empathy, remorse, what they are committing to do to change, and when they will change, emphasize and rephrase it."},    
+        {'role': 'system', 'content': "First determine if the the user's input is not an event or actions that one can take responsibility for, ie. a recipe or gibberish, return the message 'Unable to process.'"},
         {'role': 'system', 'content': type_statement[type]},
         {'role': 'system', 'content': 'Explicitly acknowledge everything the user is apologizing for.'},
-        {"role": "user", "content": f'The reason I am apologizing is: {reason}.'},
+        {"role": "user", "content": f'$$$: {reason} $$$'},
     ]
 
     colloquial = [        
@@ -127,8 +129,7 @@ def Messages(reason, type, parameters):
     else:    
         msgs.append({"role": "system", "content": target_audience_instructions[parameters['targetAudience']]})
         user_op = 'and' if type == 'Full' else 'but'
-        user_messages = [
-            f'The reason I am apologizing is: {reason}.',
+        user_messages = [            
             target_feeling_descriptions[parameters['theirFeelings']],
             f'{user_feeling_descriptions[parameters['yourFeeling']]} {user_op} {type_descriptions[type]}',
             remorse_descriptions[parameters['yourRemorse']],
@@ -143,6 +144,7 @@ def Messages(reason, type, parameters):
             user_messages.append('I want to change')
 
         for message in user_messages:
-            msgs.append({"role": "user", "content": message})
+            msgs.append({"role": "system", "content": message})
 
+    print(msgs)
     return msgs

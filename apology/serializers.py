@@ -14,6 +14,6 @@ class ApologiesSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
 
-        representation['created_at'] = instance.created_at.strftime("%A %B %d, %Y %l:%M %p")
+        representation['reason'] = instance.reason[:140]
 
         return representation
