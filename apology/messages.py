@@ -10,7 +10,6 @@ def Messages(reason, type, parameters):
         'Fake Regret Apology': "You are to make the words to be interpretable as expressing regret not for the user's action, but for the consequence of being caught."
     }
 
-
     user_feeling_descriptions = {
         'Neutral': 'Make the narrator apologize with a calm and composed demeanor, showing neither strong remorse nor defensiveness,',
         'Unease': 'Make the narrator feel slightly uncomfortable while offering an apology, with a sense of awkwardness or uncertainty about your reaction,',
@@ -44,9 +43,8 @@ def Messages(reason, type, parameters):
 
 
     type_descriptions = {
-        'None': "Make the narrator insincere or disingenuous. Exhibit a tendency to avoid accountability and may only apologize as a formality or to appease others without a genuine acknowledgment of wrongdoing. The apology might come across as superficial or lacking true remorse, as it doesn't align with a sincere acceptance of responsibility for the consequences of the actions.",
-        'Half': "Make the narrator only willing to take half of the responsibility for an action they am apologizing for. Have them acknowledge their involvement in the situation but fall short of accepting full responsibility, suggesting that they attribute some of the blame to others or external factors. Anticipate that the apology might be perceived as incomplete or lacking in genuine remorse, as it reflects a partial acknowledgment of their role in the matter.",
-        'Full': "Make the narrator willing to accept all of the responsibility for an action they am apologizing for. They are accountable, responsible, or sincere. They demonstrate a high level of integrity by fully acknowledging and taking ownership of their actions without deflecting blame onto others. Thye apology is likely to be perceived as genuine, as it reflects a sincere commitment to recognizing and addressing their role in the situation."
+        'Fauxpology': "Make the narrator insincere or disingenuous. Exhibit a tendency to avoid accountability and may only apologize as a formality or to appease others without a genuine acknowledgment of wrongdoing. The apology might come across as superficial or lacking true remorse, as it doesn't align with a sincere acceptance of responsibility for the consequences of the actions.",
+        'Classic': "Make the narrator willing to accept all of the responsibility for an action they am apologizing for. They are accountable, responsible, or sincere. They demonstrate a high level of integrity by fully acknowledging and taking ownership of their actions without deflecting blame onto others. Thye apology is likely to be perceived as genuine, as it reflects a sincere commitment to recognizing and addressing their role in the situation."
     }
 
     remorse_descriptions = {
@@ -81,9 +79,8 @@ def Messages(reason, type, parameters):
     }
 
     type_statement = {
-        'Full': "You are a writer known for their upright character and integrity. It is your belief that each line should resonate with sincerity, remorse, and the promise of transformative change. Navigate the narrative with the grace of a storyteller, ensuring your words not only reach the readers but also resonate with their hearts. Tailor your prose to diverse literary contexts, whether it's an intimate moment, a grand revelation, or a compelling professional exchange. Strike the delicate balance between formal eloquence and genuine emotion, for every word holds the power to captivate. Draw from your experiences and instincts while embracing the editorial wisdom we offer. Conflict resolution becomes a dynamic plot point, propelling your narrative forward and engaging our discerning readership. Embrace the professionalism, authenticity, and continuous learning mindset that defines our literary culture.",
-        'Half': "You are a writer comes across semi-sincere and halfway reflective, but sometimes not so much, so when you craft your written expression, adopt a tone that veils any genuine sentiment or acknowledgment of the impact your actions may have had. Your words should don the guise of an apology, but let them carry an undercurrent of insincerity, as if this act of remorse is more of a formality or a calculated move than a genuine expression. Discrepancies between your chosen words and your conveyed tone or body language are crucial—create an incongruity that leaves the reader questioning the authenticity of your apology. Use qualifiers liberally, softening the impact of your words, and consider deflecting responsibility, subtly shifting blame to external factors. In doing so, you diminish the sincerity of your remorse, leaving room for doubt about your commitment to making amends or truly understanding the consequences of your behavior. Your writing should leave an impression that you are not fully invested in the process of reconciliation, and that this apology might be more about strategy than genuine remorse. This artful ambiguity will keep the reader questioning the depth of your sincerity and leave them with a lingering sense of uncertainty.",
-        'None': "You are a writer who fills their work to the brim with sarcasm. Attempt to delve into the supposed emotional depth and authenticity of your character, treating the apology scene as an opportunity to craft what might appear as sincerity, remorse, and a rather token commitment to transformative change. It would be prudent for you to craft your narrative with an air of storytelling, aiming to ensure that your words, while perhaps lacking genuine depth, manage to create an illusion of resonating with readers and stirring their emotions. Adapt your prose to various literary contexts, attempting to strike a balance between formal eloquence and what might be construed as genuine emotion. Ask your audience to drawing from their experiences and instincts, even if it's just for show. Conflict resolution should serve as a somewhat forced plot point, ostensibly propelling your narrative forward and engaging our discerning readership. Embrace the veneer of professionalism, the illusion of authenticity, and a seemingly continuous learning mindset."
+        'Classic': "You are a writer known for their upright character and integrity. It is your belief that each line should resonate with sincerity, remorse, and the promise of transformative change. Navigate the narrative with the grace of a storyteller, ensuring your words not only reach the readers but also resonate with their hearts. Tailor your prose to diverse literary contexts, whether it's an intimate moment, a grand revelation, or a compelling professional exchange. Strike the delicate balance between formal eloquence and genuine emotion, for every word holds the power to captivate. Draw from your experiences and instincts while embracing the editorial wisdom we offer. Conflict resolution becomes a dynamic plot point, propelling your narrative forward and engaging our discerning readership. Embrace the professionalism, authenticity, and continuous learning mindset that defines our literary culture.",        
+        'Fauxpology': "You are a writer who fills their work to the brim with sarcasm. Attempt to delve into the supposed emotional depth and authenticity of your character, treating the apology scene as an opportunity to craft what might appear as sincerity, remorse, and a rather token commitment to transformative change. It would be prudent for you to craft your narrative with an air of storytelling, aiming to ensure that your words, while perhaps lacking genuine depth, manage to create an illusion of resonating with readers and stirring their emotions. Adapt your prose to various literary contexts, attempting to strike a balance between formal eloquence and what might be construed as genuine emotion. Ask your audience to drawing from their experiences and instincts, even if it's just for show. Conflict resolution should serve as a somewhat forced plot point, ostensibly propelling your narrative forward and engaging our discerning readership. Embrace the veneer of professionalism, the illusion of authenticity, and a seemingly continuous learning mindset."
     }
 
     will_do_statement = {
@@ -99,12 +96,12 @@ def Messages(reason, type, parameters):
     }
 
     msgs = [
-        {'role': 'system', 'content': "Analyze the following user-submitted text, which will be wrapped in '$$$', to determine if it constitutes a valid narrative. Consider the presence of key narrative elements such as a clear beginning, development, and conclusion, characters, a setting, and a plot that progresses. Evaluate the text for coherence and logical flow, indicating the presence of a storyline or personal experience. Exclude content that resembles non-narrative formats like recipes, lists, or unstructured gibberish. If the text does not fulfill this criteria then simply respond with 'Not Possible'"},
+        {'role': 'system', 'content': "Analyze the following user-submitted text, which will be wrapped in '$$$', to determine if it constitutes a valid narrative. Consider the presence of key narrative elements such as a characters, a setting, and events. Evaluate the text for coherence and logical flow, indicating the presence of a storyline or personal experience. Exclude content that resembles non-narrative formats like recipes, lists, or unstructured gibberish. If the text does not fulfill this criteria then simply respond with 'Not Possible'"},
         {"role": "system", "content": "You are a fiction writer who is writing in the first person on behalf of the user.  The apology you are tasked to write appears near the end of the second act of a book.  To fulfill the needs of your publisher, you are to generate an approximate 1000 word apology based on the input of the user.  Make sure to use specific details from the user's input.  The user will tell you what the character is apologizing for, how the character feels about the event, and the amount of accountability or responsibility the character is willing to accept.  If the user mentions the character's level of empathy, remorse, what they are committing to do to change, and when they will change, emphasize and rephrase it."},    
         {'role': 'system', 'content': "First determine if the the user's input is not an event or actions that one can take responsibility for, ie. a recipe or gibberish, return the message 'Unable to process.'"},
         {'role': 'system', 'content': type_statement[type]},
         {'role': 'system', 'content': 'Explicitly acknowledge everything the user is apologizing for.'},
-        {"role": "user", "content": f'$$$: {reason} $$$'},
+        {"role": "user", "content": f'$$$: "{reason}" $$$'},
     ]
 
     colloquial = [        
@@ -122,29 +119,31 @@ def Messages(reason, type, parameters):
         msgs.append({'role': 'system', 'content': 'Adhere to a more structured, refined, and professional style of communication.'})
 
 
-    if type == 'None':
+    if type == 'Fauxpology':
         msgs.append({"role": "system", "content": "The character who is writing this apology the antihero in the story, who is unaware that they are the antihero, and prefers to go unnamed.  In the arc of this story, the antihero has yet realized the err in their ways, and they are still a flawed work in progress."})
         msgs.append({"role": "system", "content": insincere_instructions[parameters['targetAudience']]})
         msgs.append({"role": "system", "content": fake_apologies_statement[parameters['noApology']]})
+        msgs.append({"role": "system", "content": 'Ensure that your output is obviously tongue in cheek'})
     else:    
         msgs.append({"role": "system", "content": target_audience_instructions[parameters['targetAudience']]})
-        user_op = 'and' if type == 'Full' else 'but'
+        
         user_messages = [            
             target_feeling_descriptions[parameters['theirFeelings']],
-            f'{user_feeling_descriptions[parameters['yourFeeling']]} {user_op} {type_descriptions[type]}',
+            user_feeling_descriptions[parameters['yourFeeling']],
+            type_descriptions[type],
             remorse_descriptions[parameters['yourRemorse']],
             empathy_descriptions[parameters['yourEmpathy']],
-            f'As part of my apology, I would like to strongly convey that {will_do_statement[parameters['willDo']]}, and {when_change_statement[parameters['whenChange']]}'
+            will_do_statement[parameters['willDo']],
+            when_change_statement[parameters['whenChange']],
         ]
 
         if parameters['willingToChange'] == True:
-            user_messages.append('I am willing to change')
+            user_messages.append('Express that the narrator has the will to change.')
 
         if parameters['wantToChange'] == True:
-            user_messages.append('I want to change')
+            user_messages.append('Express that the narrator has the want to change.')
 
         for message in user_messages:
             msgs.append({"role": "system", "content": message})
 
-    print(msgs)
     return msgs
