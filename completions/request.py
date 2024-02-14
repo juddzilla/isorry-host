@@ -7,7 +7,9 @@ import os
 client = OpenAI()
 
 
-def Request(messages):    
+def Request(messages):
+    print(100)    
+    print(messages)
     completion_request = client.chat.completions.create(
         model=os.environ["CHAT_GPT_MODEL"],
         messages=messages
