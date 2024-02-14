@@ -40,6 +40,8 @@ class ApologyView(APIView):
             apology = serializer.save()            
             
             messages = Messages(request.data.get('reason'), request.data.get('type'), request.data.get('parameters'))
+            # print(messages)
+            # return Response({"success": 100}, status=status.HTTP_201_CREATED)
             completion = Request(messages)
             
             apology_serialized = ApologiesSerializer(apology)
