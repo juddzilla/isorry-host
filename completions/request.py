@@ -12,8 +12,11 @@ def Request(messages):
     print(messages)
     completion_request = client.chat.completions.create(
         model=os.environ["CHAT_GPT_MODEL"],
-        messages=messages
+        messages=messages,
+        temperature=0.5
     )    
+
+    print(completion_request.choices[0].message.content)
 
     ai_created_at = make_aware(datetime.fromtimestamp(completion_request.created))
     data = {

@@ -37,18 +37,18 @@ def Target_Audience(value):
 
 def Fauxpology(target_audience, fauxpology):
     fake_apologies_statement = {
-        'Non-Apology': "You are to make the words to be interpretable as shifting the blame to the audience's sensitivity.",
-        'Justification Apology': "You are to make the words to be interpretable as offering an excuse for the user's behavior rather than take responsibility.",
-        'Blame-Shift Apology': "You are to make the words to be interpretable as shifting the blame onto the audience and minimize the user's personal responsibility.",
-        'Conditional Apology': "You are to make the words to be interpretable as putting conditions on the user's apology, making it contingent on the audience's actions.",
-        'Minimizing Apology': "You are to make the words to be interpretable as downplaying the impact of the user's action on the audience, minimizing its significance.",
-        'Redirected Apology': "You are to make the words to be interpretable as to turning the tables by bringing up the audience's mistakes, even accusing them of previously doing the same thing.",
-        'Empty Apology': "You are to make the words to be interpretable as acknowledging the audience's feelings without admitting the user's fault or expressing genuine remorse.",
-        'Fake Regret Apology': "You are to make the words to be interpretable as expressing regret not for the user's action, but for the consequence of being caught."
+        'Non-Apology': "Shift the blame to the AFFECTED's sensitivity.",
+        'Justification Apology': "Offer an excuse for the AFFECTED's behavior rather than taking responsibility.",
+        'Blame-Shift Apology': "Shift the blame onto the AFFECTED and minimize the their's personal responsibility.",
+        'Conditional Apology': "Put conditions on the CHARACTERS's apology, and make it contingent on the AFFECTED's actions.",
+        'Minimizing Apology': "Downplay the impact of the CHARACTER's actions on the AFFECTED - minimize its significance.",
+        'Redirected Apology': "Turn the tables by bringing up the AFFECTED's mistakes, even accusing them of previously doing the same thing.",
+        'Empty Apology': "Acknowledge the AFFECTED's feelings without admitting the CHARACTER's fault or expressing genuine remorse.",
+        'Fake Regret Apology': "Express regret not for the their own actions, but for the consequence of being caught."
     }
 
     insincere_instructions = {
-        'Family': "Craft a message that feigns warmth and sincerity while concealing true feelings. Use terms of endearment superficially, express love without genuine emotion, and downplay the importance of your relationship.",
+        'Family': "Feign warmth and sincerity while concealing true feelings. Use terms of endearment superficially, express love without genuine emotion, and downplay the importance of your relationship.",
         'Friend': "Adopt a tone that pretends to be supportive and empathetic, but lacks genuine understanding. Use friendly language without true concern, express insincere regret, and undermine the value of your friendship subtly.",
         'Coworker': "Maintain a facade of professionalism, appearing apologetic while concealing true intentions. Use workplace-appropriate language superficially, acknowledge the impact on work without genuine remorse, and divert focus from finding a solution.",
         'Neighbor': "Speak with feigned courtesy and consideration, hiding any true regard for the neighbor. Be polite on the surface, downplay the impact on the neighborhood insincerely, and express a commitment to resolution without genuine concern.",
@@ -57,23 +57,21 @@ def Fauxpology(target_audience, fauxpology):
         'Acquaintance': "Use polite language that disguises a lack of genuine respect and consideration. Maintain a surface-level friendliness, acknowledge inconveniences without sincere remorse, and express a desire for a positive relationship without genuine commitment.",
         'Other': "Craft a message with polite and considerate language that conceals any true intention or attachment. Be respectful on the surface, acknowledge inconveniences insincerely, and express a desire for positivity without genuine commitment."
     }
+
+    return f"""
+        Your task it to write an obviously tongue-in-cheek apology, also known as a Non-Apology Apology or Fauxpology, on behalf of the CHARACTER to the AFFECTED.
+
+        Requirements for the "apology":
+        1. Paint the the CHARACTER as insincere or disingenuous. In the apology, avoid accountability and only apologize as a formality, as if to appease others without a genuine acknowledgment of wrongdoing. Color the CHARACTER as superficial or lacking true remorse. Gloss over the USER_INPUT, and do not explicitly reference the events in any meaningful way.
+        2. Write the apology in this tone: {insincere_instructions[target_audience]}
+        3. As the CHARACTER, deflect responsibility in the apology in this specific way: {fake_apologies_statement[fauxpology]}
+
+        The expected output is an apology, written in the the first person perspective of the CHARACTER, as directed towards the AFFECTED. Take on the role of a writer who's writing is filled to the brim with sarcasm. Delve into the supposed emotional depth and authenticity of your character, treating the apology scene as an opportunity to craft what might appear as sincerity, remorse, and a rather token commitment to transformative change. Craft your narrative with an air of storytelling - ensure that your words, while lacking genuine depth, manage to create an illusion of resonating with readers. Adapt your prose to various literary contexts, attempting to strike a balance between formal eloquence and what might be construed as genuine emotion. Your style treats conflict resolution as a forced plot point, ostensibly propelling your narrative forward and engaging our discerning readership. Embrace the veneer of professionalism and the illusion of authenticity.
+    """
     
-    return ''.join([
-        "In this apology, the CHARACTER is the antihero of the story, who is unaware that they are the antihero, and prefers to go unnamed.  In the arc of this story, the antihero has yet realized the err in their ways, and they are still a flawed work in progress.",
-        insincere_instructions[target_audience],
-        fake_apologies_statement[fauxpology]
-        ])
-
-def Writer_Description(type):
-    type_statement = {
-        'Classic': "You are a writer known for creating character's known for their upright character and integrity. It is your belief that each line should resonate with sincerity, remorse, and the promise of transformative change. Navigate the narrative with the grace of a storyteller, ensuring your words not only reach the readers but also resonate with their hearts. Tailor your prose to diverse literary contexts, whether it's an intimate moment, a grand revelation, or a compelling professional exchange. Strike the delicate balance between formal eloquence and genuine emotion, for every word holds the power to captivate. Draw from your experiences and instincts while embracing the editorial wisdom we offer. Conflict resolution becomes a dynamic plot point, propelling your narrative forward and engaging our discerning readership. Embrace the professionalism, authenticity, and continuous learning mindset that defines our literary culture.",        
-        'Fauxpology': "You are a writer who fills their work to the brim with tongue in cheek-ness and sarcasm. Attempt to delve into the supposed emotional depth and authenticity of your character, treating the apology scene as an opportunity to craft what might appear as sincerity, remorse, and a rather token commitment to transformative change. It would be prudent for you to craft your narrative with an air of storytelling, aiming to ensure that your words, while perhaps lacking genuine depth, manage to create an illusion of resonating with readers and stirring their emotions. Adapt your prose to various literary contexts, attempting to strike a balance between formal eloquence and what might be construed as genuine emotion. Ask your audience to draw from their experiences and instincts, even if it's obviously just for show. Conflict resolution should serve as a forced plot point, ostensibly propelling your narrative forward and engaging our discerning readership. Embrace the veneer of professionalism, the illusion of authenticity, and a seemingly continuous learning mindset."
-    }
-
-    return type_statement[type]
 
 def Messages(reason, type, parameters):
-    apology_length = 10000
+    apology_length = 1000
 
     user_feeling_descriptions = {
         'Neutral': 'The CHARACTER is responded to the  calm and composed demeanor, showing neither strong remorse nor defensiveness,',
@@ -115,11 +113,6 @@ def Messages(reason, type, parameters):
         'Exceptional': "The CHARACTER shows an exceptional level of empathy, going above and beyond in understanding and responding to the emotional consequences, with a remarkable commitment to supporting and empathizing with those affected."
     }
 
-    type_descriptions = {
-        'Fauxpology': "The CHARACTER should come across as insincere or disingenuous. Exhibit a tendency to avoid accountability and may only apologize as a formality or to appease others without a genuine acknowledgment of wrongdoing. The apology might come across as superficial or lacking true remorse, as it doesn't align with a sincere acceptance of responsibility for the consequences of the actions.",
-        'Classic': "The CHARACTER should be willing to accept all of the responsibility for an action they am apologizing for. They are accountable, responsible, or sincere. They demonstrate a high level of integrity by fully acknowledging and taking ownership of their actions without deflecting blame onto others. Thye apology is likely to be perceived as genuine, as it reflects a sincere commitment to recognizing and addressing their role in the situation."
-    }
-
     will_do_statement = {
         'Everything I Can': "The CHARACTER is committed to taking comprehensive measures and implementing proactive steps to ensure that the circumstances leading to the MISDEED are thoroughly addressed and prevented from occurring again in the future. Express that they understand the impact it had and will be dedicated to learning from this experience, instituting necessary changes, and fostering an environment where such incidents are actively mitigated.",
         'My Best': 'The CHARACTER is dedicated to personal growth and understanding the impact of their actions. Moving forward, they will actively work on developing new habits, learning from this experience, and making conscious choices to ensure that such occurrences are avoided in the future',
@@ -135,32 +128,43 @@ def Messages(reason, type, parameters):
     MESSAGE = f"""
     Firstly, reference the user submitted text (which will be wrapped in '$$$') as `USER_INPUT`.  Analyze USER_INPUT to determine if it constitutes a valid narrative. Consider the presence of key narrative elements such as a characters, a setting, and events. Evaluate the text for coherence and logical flow, indicating the presence of a storyline or personal experience. Exclude content that resembles non-narrative formats like recipes, lists, or unstructured gibberish. If the text does not fulfill this criteria then simply respond with 'Not Possible' and do not proceed.
 
-    Your role is that of a fiction writer tasked with composing an apology (referenced as `APOLOGY`) from one of your characters (to be referenced as `CHARACTER`) who has wronged another (to be referenced as `AFFECTED`) within the story. {Writer_Description(type)} 
+    Your role is that of a fiction writer, writing in the first person on behalf of one of your characters (to be referenced as `CHARACTER`), and writing a letter to another (to be referenced as `AFFECTED`).
     
-    Here are the details to guide the creation of this apology:
-    Qualities of the APOLOGY: [Make the apology approximately {apology_length} characters.  Sign the apology 'Sincerely, iSorry.lol]
-    CHARACTER's Misdeed: [Use the analyzed USER_INPUT serves as the basis for the conflict in the story. This will be referenced as `MISDEED`]
+    Requirements for the output:
+    1. Make the outpup approximately {apology_length} characters
+    2. Directly refer to the AFFECTED only once, and in the salutation as 'Dearest,'
+    3. Sign the output "Sincerely, iSorry.lol"
     """
 
 
     if type == 'Fauxpology':
-        MESSAGE += Fauxpology(parameters['targetAudience'], parameters['noApology'])        
+        MESSAGE += f"/n/n {Fauxpology(parameters['targetAudience'], parameters['noApology'])}"
     else: 
-        MESSAGE += ' '.join([
-            f"CHARACTER's Sincerity: [{type_descriptions[type]}]",
-            f"CHARACTER's Feelings regarding the events of the MISDEED: [{user_feeling_descriptions[parameters['yourFeeling']]}]",
-            f"AFFECTED's Feelings regarding the events of the MISDEED: [{target_feeling_descriptions[parameters['theirFeelings']]}]",
-            f"CHARACTER's Empathy: [{empathy_descriptions[parameters['yourEmpathy']]}]",
-            f"CHARACTER's Remorse: [{remorse_descriptions[parameters['yourRemorse']]}]",
-            f"CHARACTER's Plan for Making Amends: [{will_do_statement[parameters['willDo']]}]",      
-            f"CHARACTER's Time Commitment to Making Personal Change: [{when_change_statement[parameters['whenChange']]}]",    
-        ])           
+        message = f"""
+        Your task it to write a heartfelt apology on behalf of the CHARACTER to the AFFECTED.
+
+        Take into consideration, and incorparate the following:
+        CHARACTER's Misdeed: [Use the analyzed USER_INPUT as the basis for the conflict in the story. This will be referenced as `MISDEED`]
+        CHARACTER's Sincerity: [The CHARACTER is willing to accept all of the responsibility. Display them as accountable, responsible, or sincere. Portray the CHARACTER to show a high level of integrity by fully acknowledging and taking ownership of their actions without deflecting blame onto the AFFECTED. Be genuine without being over the top. Reflect a sincere commitment to recognizing and addressing the CHARACTER's role in the situation.]
+        Type of Relationship between CHARACTER and AFFECTED: [{Target_Audience(parameters['targetAudience'])}]
+        Acknowledge the CHARACTER's Feelings regarding the events of the MISDEED: [{user_feeling_descriptions[parameters['yourFeeling']]}]
+        Acknowledge the AFFECTED's Feelings regarding the events of the MISDEED: [{target_feeling_descriptions[parameters['theirFeelings']]}]
+        CHARACTER's Empathy: [{empathy_descriptions[parameters['yourEmpathy']]}]
+        CHARACTER's Remorse: [{remorse_descriptions[parameters['yourRemorse']]}]
+        CHARACTER's Plan for Making Amends: [{will_do_statement[parameters['willDo']]}]
+        CHARACTER's Time Commitment to Making Personal Change: [{when_change_statement[parameters['whenChange']]}]
+        
+        The expected output is an apology, written in the the first person perspective of the CHARACTER, as directed towards the AFFECTED. Take on the role of a writer known for creating character's known for their upright character and integrity. It is your belief that each line should resonate with sincerity, remorse, and the promise of transformative change. Navigate the narrative with the grace of a storyteller, ensuring your words not only reach the readers but also resonate with their hearts. Tailor your prose to diverse literary contexts, whether it's an intimate moment, a grand revelation, or a compelling professional exchange. Strike the delicate balance between formal eloquence and genuine emotion, for every word holds the power to captivate. Draw from your experiences and instincts while embracing the editorial wisdom we offer. Conflict resolution becomes a dynamic plot point, propelling your narrative forward and engaging our discerning readership. Embrace the professionalism, authenticity, and continuous learning mindset that defines our literary culture.
+        """
+       
         
         if parameters['willingToChange'] == True:
-            MESSAGE += ' In poetic terms, express that the CHARACTER has the will to change.'
+            message += '\nIn poetic terms, express that the CHARACTER has the will to change.'
 
         if parameters['wantToChange'] == True:
-            MESSAGE += ' In poetic terms, express that the CHARACTER has the want to change.'
+            message += '\nIn poetic terms, express that the CHARACTER has the want to change.'
+
+        MESSAGE += message
 
     return [
         {'role': 'system', 'content': MESSAGE},
