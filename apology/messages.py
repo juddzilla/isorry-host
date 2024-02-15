@@ -131,7 +131,7 @@ def Messages(reason, type, parameters):
     Your role is that of a fiction writer, writing in the first person on behalf of one of your characters (to be referenced as `CHARACTER`), and writing a letter to another (to be referenced as `AFFECTED`).
     
     Requirements for the output:
-    1. Make the outpup approximately {apology_length} characters
+    1. Make the output approximately {apology_length} characters
     2. Directly refer to the AFFECTED only once, and in the salutation as 'Dearest,'
     3. Sign the output "Sincerely, iSorry.lol"
     """
