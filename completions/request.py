@@ -7,16 +7,12 @@ import os
 client = OpenAI()
 
 
-def Request(messages):
-    print(100)    
-    print(messages)
+def Request(messages):    
     completion_request = client.chat.completions.create(
         model=os.environ["CHAT_GPT_MODEL"],
         messages=messages,
-        temperature=0.5
+        temperature=0.2
     )    
-
-    print(completion_request.choices[0].message.content)
 
     ai_created_at = make_aware(datetime.fromtimestamp(completion_request.created))
     data = {

@@ -17,7 +17,7 @@ class ApologiesView(APIView):
         List all the apologies for given requested user
         '''
           
-        apologies = Apology.objects.filter(user=request.user.id).exclude(completion__message='Not Possible')
+        apologies = Apology.objects.filter(user=request.user.id).exclude(completion__message='Not Possible').order_by('-created_at')
         serialized = ApologiesSerializer(apologies, many=True)    
         return Response(serialized.data, status=status.HTTP_200_OK)
 
@@ -39,13 +39,11 @@ class ApologyView(APIView):
         if serializer.is_valid():
             apology = serializer.save()            
             
-            messages = Messages(request.data.get('reason'), request.data.get('type'), request.data.get('parameters'))
-            # print(messages)
-            # return Response({"success": 100}, status=status.HTTP_201_CREATED)
+            messages = Messages(request.data.get('reason'), request.data.get('type'), request.data.get('parameters'))            
             completion = Request(messages)
             
             apology_serialized = ApologiesSerializer(apology)
-            completion_serialized = CompletionPublicSerializer(apology.completion)
+            completion_serialized = CompletionPublicSerializer(completion)            
             if completion is not None:
                 apology.completion = completion
                 apology.save()
