@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
+IS_PRODUCTION = env('ENVIRONMENT') == 'production'
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -43,15 +45,12 @@ LOGGING = {
 SECRET_KEY=env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not IS_PRODUCTION 
 
 ALLOWED_HOSTS = [
-    # 'localhost',
-    # "https://isorry.lol",
-    # "http://localhost:3000",
-    # "http://127.0.0.1:3000",
+    'localhost',
+    "https://isorry.lol",
 ]
-
 
 # Application definition
 
@@ -89,17 +88,20 @@ MIDDLEWARE = [
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_SECURE = IS_PRODUCTION
 
 CORS_ALLOWED_ORIGINS = [
     "https://isorry.lol",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = IS_PRODUCTION
 CORS_ALLOW_CREDENTIALS=True
 
 CSRF_COOKIE_PATH = '/'
 CSRF_COOKIE_SAMESITE = 'Strict'  
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = IS_PRODUCTION
 CSRF_TRUSTED_ORIGINS = [
     "https://isorry.lol",
     "http://localhost:3000",
@@ -124,6 +126,9 @@ TEMPLATES = [
     },
 ]
 
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_SSL_REDIRECT = IS_PRODUCTION
 WSGI_APPLICATION = 'isorrylol.wsgi.application'
 
 AUTHENTICATION_BACKENDS = [
