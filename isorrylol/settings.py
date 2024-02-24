@@ -10,16 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import os
-import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-IS_PRODUCTION = env('ENVIRONMENT') == 'production'
+IS_PRODUCTION = os.environ.get('ENVIRONMENT') == 'production'
 
 LOGGING = {
     "version": 1,
@@ -42,15 +37,10 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY=env('SECRET_KEY')
+SECRET_KEY=os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not IS_PRODUCTION 
-
-ALLOWED_HOSTS = [
-    'localhost',
-    "https://isorry.lol",
-]
 
 # Application definition
 
@@ -63,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'corsheaders',
-    'rest_framework',
+    'rest_framework',    
     'users',
     'allauth',
     'allauth.account',
@@ -74,7 +64,7 @@ INSTALLED_APPS = [
     'django_extensions'
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -84,29 +74,46 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
-    'isorrylol.middleware.sessionid.SessionMiddleware'
+    'isorrylol.middleware.sessionid.SessionMiddleware',
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = IS_PRODUCTION
 
+ALLOWED_HOSTS = [    
+    "isorry.lol",
+]
+
 CORS_ALLOWED_ORIGINS = [
     "https://isorry.lol",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://isorry.lol",
+]
+
+if (DEBUG):
+    ALLOWED_HOSTS.extend([
+        '127.0.0.1',
+        'localhost',
+    ])
+
+    CORS_ALLOWED_ORIGINS.extend([
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ])
+
+    CSRF_TRUSTED_ORIGINS.extend([
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ])
+
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = IS_PRODUCTION
 CORS_ALLOW_CREDENTIALS=True
-
 CSRF_COOKIE_PATH = '/'
 CSRF_COOKIE_SAMESITE = 'Strict'  
 CSRF_COOKIE_SECURE = IS_PRODUCTION
-CSRF_TRUSTED_ORIGINS = [
-    "https://isorry.lol",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
 
 ROOT_URLCONF = 'isorrylol.urls'
 
@@ -153,11 +160,11 @@ LOGIN_REDIRECT_URL = '/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
@@ -215,9 +222,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': env('GOOGLE_CLIENT_ID'),
-            'secret': env('GOOGLE_SECRET'),
-            'key': env('GOOGLE_KEY')
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID'),
+            'secret': os.environ.get('GOOGLE_SECRET'),
+            'key': os.environ.get('GOOGLE_KEY')
         },
         'SCOPE': [
             'profile',
