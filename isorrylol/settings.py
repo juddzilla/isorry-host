@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import requests
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -81,8 +82,22 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_SECURE = IS_PRODUCTION
 
 ALLOWED_HOSTS = [    
-    "isorry.lol",
+    "api.isorry.lol",
 ]
+
+if IS_PRODUCTION:
+    try:
+        IMDSv2_TOKEN = requests.put('http://169.254.169.254/latest/api/token', headers={
+            'X-aws-ec2-metadata-token-ttl-seconds': '3600'
+        }).text        
+        EC2_PUBLIC_IP = requests.get('http://169.254.169.254/latest/meta-data/public-ipv4', timeout=0.01, headers={
+            'X-aws-ec2-metadata-token': IMDSv2_TOKEN
+        }).text        
+    except requests.exceptions.RequestException:
+        EC2_PUBLIC_IP = None
+
+    if EC2_PUBLIC_IP:
+        ALLOWED_HOSTS.extend([EC2_PUBLIC_IP, '0.0.0.0'])        
 
 CORS_ALLOWED_ORIGINS = [
     "https://isorry.lol",
@@ -135,7 +150,7 @@ TEMPLATES = [
 
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 31536000
-SECURE_SSL_REDIRECT = IS_PRODUCTION
+# SECURE_SSL_REDIRECT = IS_PRODUCTION // Being handled by NGINX
 WSGI_APPLICATION = 'isorrylol.wsgi.application'
 
 AUTHENTICATION_BACKENDS = [

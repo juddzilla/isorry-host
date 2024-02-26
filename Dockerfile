@@ -1,6 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.12.1-alpine
 
+ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Set the working directory in the container
