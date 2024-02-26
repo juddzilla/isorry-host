@@ -55,7 +55,7 @@ class GithubOAuthView(APIView):
         req_user = requests.get(
             'https://api.github.com/user',
             headers = {'Authorization': f'Bearer {token}'})        
-        user = req_user.json()        
+        user = req_user.json()              
         first, *last = user['name'].split()
         return {
             "email": user['email'],
@@ -66,7 +66,7 @@ class GithubOAuthView(APIView):
 
     def get(self, request, *args, **kwargs):                
         code = request.GET.get('code')
-        token = self.get_token(code)        
+        token = self.get_token(code) 
         token_user = self.get_user(token['access_token'])                
         user = find_user(username=token_user['username'])
 
