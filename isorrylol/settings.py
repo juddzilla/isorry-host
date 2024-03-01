@@ -106,6 +106,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://isorry.lol",
+    "https://api.isorry.lol",
 ]
 
 if (DEBUG):
